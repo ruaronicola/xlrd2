@@ -36,7 +36,7 @@ def ensure_elementtree_imported(verbosity, logfile):
         #### 2.7.2.1: fails later with
         #### NotImplementedError: iterparse is not supported on IronPython. (CP #31923)
     else:
-        try: import defusedxml.cElementTree as ET
+        try: import defusedxml.ElementTree as ET
         except ImportError:
             try: import xml.etree.cElementTree as ET
             except ImportError:
@@ -263,7 +263,7 @@ class X12General(object):
             fprintf(self.logfile, "\n=== %s ===\n", heading)
         self.tree = ET.parse(stream)
         getmethod = self.tag2meth.get
-        for elem in self.tree.iter() if Element_has_iter else self.tree.getiterator():
+        for elem in self.tree.iter() if Element_has_iter else self.tree.iter():
             if self.verbosity >= 3:
                 self.dump_elem(elem)
             meth = getmethod(elem.tag)
@@ -309,7 +309,7 @@ class X12Book(X12General):
         self.tree = ET.parse(stream)
         getmenu = self.core_props_menu.get
         props = {}
-        for elem in self.tree.iter() if Element_has_iter else self.tree.getiterator():
+        for elem in self.tree.iter() if Element_has_iter else self.tree.iter():
             if self.verbosity >= 3:
                 self.dump_elem(elem)
             menu = getmenu(elem.tag)
